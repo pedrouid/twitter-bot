@@ -1,9 +1,9 @@
 var Twitter = require('twitter');
 var config = require('./config.js');
 
-var account = 'heysilvergirl';
-var amount = 180;
-var screenName = 'AmandaCerny';
+var account = 'bitwhat_';
+var amount = 100;
+var screenName = 'bitcoin';
 var destroy = false;
 
 var T =  new Twitter(config[account]);
@@ -13,10 +13,6 @@ var params = {
   screen_name: screenName,
   count: amount
 };
-
-var success = 0;
-var errors = 0;
-
 
 T.get('followers/ids', params, function(err,data, response) {
   if(!err) {
@@ -30,13 +26,15 @@ T.get('followers/ids', params, function(err,data, response) {
        let id = { id: data.ids[i] }
        T.post(url, id, function(err, response){
          if (err) {
-           errors++;
            console.log(err[0].message);
          } else {
-           success++;
            let name = response.name;
            let username = response.screen_name;
-           console.log('Followed ' + name + ' | Profile: ', `https://twitter.com/${username}`)
+           if (destroy) {
+             console.log('Unollowed ' + name + ' | Profile: ', `https://twitter.com/${username}`)
+           } else {
+             console.log('Followed ' + name + ' | Profile: ', `https://twitter.com/${username}`)
+           }
          }
        });
     }
@@ -44,6 +42,3 @@ T.get('followers/ids', params, function(err,data, response) {
     console.log(err);
   }
 });
-
-console.log(account.toUpperCase(), 'FOLLOWED', success, 'FOLLOWERS SUCCESSFULLY FROM', screenName.toUpperCase());
-console.log(account.toUpperCase(), 'FAILED TO FOLLOW', errors, 'USERS FROM', screenName.toUpperCase());
