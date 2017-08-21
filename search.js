@@ -3,9 +3,9 @@ var config = require('./config.js');
 
 var account = 'bitwhat_';
 
-var searchQuery = 'blockchain';
+var searchQuery = 'bitcoin';
 var amount = 200;
-var follow = true;
+var follow = false;
 var destroy = false;
 
 var T =  new Twitter(config[account]);
